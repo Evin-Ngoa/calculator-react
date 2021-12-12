@@ -6,9 +6,9 @@ function App() {
         {/* output */}
         <div className="results">
             {/* previous-operand */}
-            <div className="top-view"></div>
+            <div className="top-view">45</div>
             {/* current-operand */}
-            <div className="bottom-view"></div>
+            <div className="bottom-view">45</div>
         </div>
 
         <button className="dark-red col-span-two">AC</button>
