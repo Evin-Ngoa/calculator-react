@@ -8,12 +8,21 @@ export const ACTIONS = {
     SELECT_OPERATION: 'SELECT_OPERATION',
     DELETE_VALUES: 'DELETE_VALUES',
     CLEAR_SCREEN: 'CLEAR_SCREEN',
-    EVALUATE: 'EVALUATE',
+    CALCULATE: 'CALCULATE',
 }
 
 function reducer(state, { type, payload }){
     switch(type) {
         case ACTIONS.ADD_VALUE:
+
+            // check if caluclation has been made then start new value and not append
+            if(state.overwriteBottomView){
+                return {
+                    ...state,
+                    currentCalcOperation: payload.value,
+                    overwriteBottomView: false,
+                }
+            }
             // limit zeros
             if(payload.value === "0" && state.currentCalcOperation === "0") return state
 
@@ -62,6 +71,24 @@ function reducer(state, { type, payload }){
             // return empty state 
             return {}
 
+        case ACTIONS.CALCULATE:
+            // if nothing has been supplied return current state
+            if(
+                state.operation == null ||
+                state.currentCalcOperation == null ||
+                state.previousCalcOperation == null 
+            ){
+                return state
+            }
+
+            return {
+                ...state,
+                overwriteBottomView: true,
+                previousCalcOperation: null,
+                operation: null,
+                currentCalcOperation: calculate(state)
+            }
+
         default:
             return state
     }
@@ -82,7 +109,7 @@ function calculate({ currentCalcOperation, previousCalcOperation, operation }){
         case "-":
             results = initial - current
             break
-        case "*":
+        case "x":
             results = initial * current
             break
         case "/":
@@ -127,7 +154,7 @@ function App() {
             <ValueButton value="1" dispatch={dispatch}/>
             <ValueButton value="2" dispatch={dispatch}/>
             <ValueButton value="3" dispatch={dispatch}/>
-            <button className="dark-blue row-span-two">=</button>
+            <button className="dark-blue row-span-two" onClick={() => dispatch({ type: ACTIONS.CALCULATE })}>=</button>
             <ValueButton value="0" dispatch={dispatch}/>
             <ValueButton value="." dispatch={dispatch}/>
 
