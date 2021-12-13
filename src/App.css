@@ -1,3 +1,19 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+@font-face {
+  font-family: 'Digital';
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot');
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2')
+      format('woff2'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff')
+      format('woff'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf')
+      format('truetype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7')
+      format('svg');
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -17,6 +33,7 @@ body {
     /* Min of 7rem Max auto  */
      /* have max 5 row items each height 6rem */
     grid-template-rows: minmax(6rem, auto) repeat(5, 6rem);
+    justify-content: center;
 
 }
 
@@ -37,7 +54,10 @@ body {
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-around;
-
+    padding: .75rem;
+    word-wrap: break-word;
+    word-break: break-all;
+    outline: 1px solid #000;
 }
 
 .results .top-view {
@@ -45,28 +65,15 @@ body {
     font-size: 20px;
 }
 
-.light-grey {
-    background: rgb(102, 102, 102);
-}
 
-.dark-red {
-    background: rgb(172, 57, 57);
-}
-
-.dark-blue {
-    background: rgb(0, 68, 102);
-}
-
-/* button:hover {
+.calculator-grid-container > button:hover {
     color: black;
     outline: 0.05em solid grey;
     z-index: 3;
 }
 
-button {
-    position: relative;
-    height: 65px;
-    width: 80px;
+.calculator-grid-container > button {
+
     color: white;
     outline: 1px solid black;
     border: none;
@@ -74,4 +81,17 @@ button {
     font-family: Share Tech Mono, monospace;
     font-size: 20px;
     cursor: default;
-} */
+}
+
+
+.light-grey {
+    background: rgb(102, 102, 102) !important;
+}
+
+.dark-red {
+    background: rgb(172, 57, 57) !important;
+}
+
+.dark-blue {
+    background: rgb(0, 68, 102) !important;
+}
