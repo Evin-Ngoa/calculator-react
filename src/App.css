@@ -64,6 +64,11 @@ body {
     color: orange;
     font-size: 20px;
 }
+.results .bottom-view {
+    font-size: 29px;
+    /* font-family: digital; */
+    color: white;
+}
 
 
 .calculator-grid-container > button:hover {
