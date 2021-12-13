@@ -17,7 +17,7 @@ function reducer(state, { type, payload }){
             // limit zeros
             if(payload.value === "0" && state.currentCalcOperation === "0") return state
 
-            // limit period to one if previous state has period
+            // limit period to one if current state has period
             if(payload.value === "." && state.currentCalcOperation.includes('.')) return state
 
             return {
@@ -26,9 +26,27 @@ function reducer(state, { type, payload }){
             }
 
         case ACTIONS.SELECT_OPERATION:
+            // operation should not be selected if no digit has been aded
+            if(state.currentCalcOperation == null && state.previousCalcOperation == null) return state
+
+            // make current value and operation be previous(top-view) if operation has been selected and set currentState to empty so that 2nd operand part is added
+            // if this has been executed then we know current has a value
+            if(state.previousCalcOperation == null){
+                return {
+                    ...state,
+                    operation: payload.operation,
+                    previousCalcOperation: state.currentCalcOperation,
+                    currentCalcOperation: null
+                }
+            }
+
+            // nesting operations, make evaluation of current expression, make current be previous and append operand, make current to null
+
             return {
                 ...state,
-                operation: `${payload.operation}`
+                previousCalcOperation: calculate(state),
+                operation: payload.operation,
+                currentCalcOperation: null
             }
 
         case ACTIONS.CLEAR_SCREEN:
@@ -38,6 +56,38 @@ function reducer(state, { type, payload }){
         default:
             return state
     }
+}
+
+function calculate({ currentCalcOperation, previousCalcOperation, operation }){
+    const initial = parseFloat(previousCalcOperation)
+    const current = parseFloat(currentCalcOperation)
+    let results = '';
+
+    // error checking of passed values
+    if(isNaN(initial) || isNaN(current)) return ""
+
+    switch(operation){
+        case "+":
+            results = initial + current
+            break
+        case "-":
+            results = initial - current
+            break
+        case "*":
+            results = initial * current
+            break
+        case "/":
+            results = initial / current
+            break
+        default:
+            results = ''
+            break
+
+    }
+
+    return results.toString()
+
+
 }
 
 function App() {
