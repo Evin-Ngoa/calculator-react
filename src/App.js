@@ -40,6 +40,15 @@ function reducer(state, { type, payload }){
                 }
             }
 
+            // check if operations are selected continuously then overite the operations only
+            if(state.currentCalcOperation == null){
+                return {
+                    ...state,
+                    operation: payload.operation
+                }
+
+            }
+
             // nesting operations, make evaluation of current expression, make current be previous and append operand, make current to null
 
             return {
