@@ -16,19 +16,25 @@ function reducer(state, { type, payload }){
         case ACTIONS.ADD_VALUE:
             // limit zeros
             if(payload.value === "0" && state.currentCalcOperation === "0") return state
+
             // limit period to one if previous state has period
             if(payload.value === "." && state.currentCalcOperation.includes('.')) return state
+
             return {
                 ...state,
                 currentCalcOperation : `${state.currentCalcOperation || ""}${payload.value}`
             }
+
         case ACTIONS.SELECT_OPERATION:
             return {
                 ...state,
                 operation: `${payload.operation}`
             }
+
         case ACTIONS.CLEAR_SCREEN:
+            // return empty state 
             return {}
+
         default:
             return state
     }
