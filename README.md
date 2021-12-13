@@ -1,6 +1,8 @@
 # Calculator
 ### [Live Site](https://evin-calculator.netlify.app/)
 
+### [Inspiration Site](https://codepen.io/freeCodeCamp/pen/wgGVVX)
+
 ### Project Goal
 - Learn advanced css grid.
 - State Management with useReducer Hook
