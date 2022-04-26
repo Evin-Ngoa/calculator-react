@@ -51,6 +51,18 @@ function reducer(state, { type, payload }){
 
             // check if operations are selected continuously then overite the operations only
             if(state.currentCalcOperation == null){
+
+                // if prev is not set and current == - then use prev operation
+                // 5 + -8 [use +. prev operation and update - to currentCalOp]
+                if(state.operation  !== null && payload.operation === '-'){
+                    return {
+                        ...state,
+                        operation: state.operation,
+                        currentCalcOperation: payload.operation
+                    }
+
+                }
+
                 return {
                     ...state,
                     operation: payload.operation
@@ -58,6 +70,16 @@ function reducer(state, { type, payload }){
 
             }
 
+            // Since I had set current state to -ve, then on 3rd operator
+            // if the previous was -ve, make current payload operation 
+            // and remove the -ve  by setting null 
+            if(state.currentCalcOperation === '-'){
+                return {
+                    ...state,
+                    operation: payload.operation,
+                    currentCalcOperation: null
+                }
+            }
             // nesting operations, make evaluation of current expression, make current be previous and append operand, make current to null
 
             return {
@@ -69,7 +91,9 @@ function reducer(state, { type, payload }){
 
         case ACTIONS.CLEAR_SCREEN:
             // return empty state 
-            return {}
+            return {
+                currentCalcOperation: 0
+            }
 
         case ACTIONS.CALCULATE:
             // if nothing has been supplied return current state
@@ -98,6 +122,11 @@ function calculate({ currentCalcOperation, previousCalcOperation, operation }){
     const initial = parseFloat(previousCalcOperation)
     const current = parseFloat(currentCalcOperation)
     let results = '';
+
+    // if gets -ve then return the prev value to be calculated
+    if(currentCalcOperation === '-') {
+        return previousCalcOperation.toString();
+    }
 
     // error checking of passed values
     if(isNaN(initial) || isNaN(current)) return ""
